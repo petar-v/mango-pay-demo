@@ -1,33 +1,31 @@
 package org.flutterbit.mangopay.demo.model;
 
 import io.micronaut.core.annotation.Introspected;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import lombok.Data;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Introspected
+@Data
 public class ProjectIdea {
-
     @Id
     @GeneratedValue
     private Long id;
 
     private String name;
+    private String description;
 
-    public Long getId() {
-        return id;
-    }
+    @ManyToOne
+    private Image image;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    @ManyToOne
+    private User author;
 
-    public String getName() {
-        return name;
-    }
+    @OneToMany(mappedBy = "projectIdea", cascade = CascadeType.ALL)
+    private List<Comment> comments;
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    @ManyToMany
+    private Set<User> likes;
 }
