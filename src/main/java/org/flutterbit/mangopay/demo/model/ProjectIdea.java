@@ -21,11 +21,11 @@ public class ProjectIdea {
     private Image image;
 
     @ManyToOne
-    private User author;
+    private CoolUser author;
 
     @OneToMany(mappedBy = "projectIdea", cascade = CascadeType.ALL)
     private List<Comment> comments;
 
     @ManyToMany
-    private Set<User> likes;
+    private Set<CoolUser> likes;
 }

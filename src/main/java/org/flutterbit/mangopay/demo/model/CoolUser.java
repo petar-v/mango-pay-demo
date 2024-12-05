@@ -7,7 +7,7 @@ import lombok.Data;
 @Entity
 @Introspected
 @Data
-class User {
+class CoolUser {
 
     @Id
     @GeneratedValue

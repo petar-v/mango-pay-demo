@@ -16,7 +16,7 @@ class Comment {
     private ProjectIdea projectIdea;
 
     @ManyToOne
-    private User author;
+    private CoolUser author;
 
     private String text;
 }
