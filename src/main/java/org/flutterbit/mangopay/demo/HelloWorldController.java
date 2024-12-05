@@ -1,4 +1,4 @@
-package org.flutterbit;
+package org.flutterbit.mangopay.demo;
 
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
@@ -7,6 +7,6 @@ import io.micronaut.http.annotation.Get;
 public class HelloWorldController {
     @Get("/")
     public String sayHello() {
-        return "Hello World";
+        return "{\"message\":\"Hello World\"}";
     }
 }

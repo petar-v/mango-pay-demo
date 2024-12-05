@@ -1,4 +1,4 @@
-package org.flutterbit;
+package org.flutterbit.mangopay.demo;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.context.ApplicationContextBuilder;
@@ -11,7 +11,7 @@ import io.swagger.v3.oas.annotations.info.*;
 @OpenAPIDefinition(
         info = @Info(
                 title = "mango-pay-demo",
-                version = "0.0"
+                version = "0.1"
         )
 )
 public class Application {

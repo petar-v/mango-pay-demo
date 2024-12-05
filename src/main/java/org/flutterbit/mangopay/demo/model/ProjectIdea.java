@@ -1,4 +1,4 @@
-package org.flutterbit.mangopay.demo;
+package org.flutterbit.mangopay.demo.model;
 
 import io.micronaut.core.annotation.Introspected;
 import jakarta.persistence.Entity;
