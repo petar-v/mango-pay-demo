@@ -17,5 +17,4 @@ This project is a REST/GraphQL API for managing and listing project ideas. Users
 
 **License**
 
-Do Whatever The Fuck You Want License
-
+The Unlicense

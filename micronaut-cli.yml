@@ -1,0 +1,6 @@
+applicationType: default
+defaultPackage: org.flutterbit
+testFramework: junit
+sourceLanguage: java
+buildTool: gradle
+features: [ app-name, data, data-jpa, gradle, graphql, h2, hamcrest, http-client, http-client-test, jackson-databind, java, java-application, jdbc-hikari, junit, logback, micronaut-aot, micronaut-build, micronaut-http-validation, mockito, netty-server, openapi, properties, readme, security-annotations, security-jwt, security-oauth2, serialization-jackson, shade, static-resources, test-resources, validation ]
