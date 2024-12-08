@@ -1,4 +1,4 @@
-package org.flutterbit;
+package org.flutterbit.mangopay.demo;
 
 import io.micronaut.runtime.EmbeddedApplication;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
