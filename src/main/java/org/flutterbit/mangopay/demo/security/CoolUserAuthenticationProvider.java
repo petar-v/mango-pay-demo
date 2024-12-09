@@ -19,7 +19,6 @@ import org.reactivestreams.Publisher;
 import jakarta.inject.Named;
 import jakarta.inject.Singleton;
 
-import java.util.List;
 import java.util.concurrent.ExecutorService;
 
 import static io.micronaut.security.authentication.AuthenticationFailureReason.CREDENTIALS_DO_NOT_MATCH;
@@ -59,14 +58,12 @@ class CoolUserAuthenticationProvider<B> implements HttpRequestReactiveAuthentica
     }
 
     private AuthenticationFailed validate(CoolUser user, AuthenticationRequest<?, ?> authenticationRequest) {
-        AuthenticationFailed authenticationFailed = null;
         if (user == null) {
-            authenticationFailed = new AuthenticationFailed(USER_NOT_FOUND);
+            return new AuthenticationFailed(USER_NOT_FOUND);
         } else if (!passwordEncoder.matches(authenticationRequest.getSecret().toString(), user.getPassword())) {
-            authenticationFailed = new AuthenticationFailed(CREDENTIALS_DO_NOT_MATCH);
+            return new AuthenticationFailed(CREDENTIALS_DO_NOT_MATCH);
         }
-
-        return authenticationFailed;
+        return null;
     }
 
     private CoolUser fetchUser(AuthenticationRequest<?, ?> authRequest) {
