@@ -1,14 +1,15 @@
-package org.flutterbit.mangopay.demo.mangopay.demo.model;
+package org.flutterbit.mangopay.demo.model;
 
 import io.micronaut.core.annotation.Introspected;
+import io.micronaut.serde.annotation.Serdeable;
 import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
 @Introspected
 @Data
-class CoolUser {
-
+@Serdeable
+public class CoolUser {
     @Id
     @GeneratedValue
     private Long id;
@@ -17,4 +18,10 @@ class CoolUser {
 
     @ManyToOne
     private Image avatar;
+
+    public CoolUser() {}
+
+    public CoolUser(String name) {
+        this.name = name;
+    }
 }

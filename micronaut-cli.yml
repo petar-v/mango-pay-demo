@@ -1,5 +1,5 @@
 applicationType: default
-defaultPackage: org.flutterbit
+defaultPackage: org.flutterbit.mangopay.demo
 testFramework: junit
 sourceLanguage: java
 buildTool: gradle

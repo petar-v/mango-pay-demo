@@ -1,13 +1,15 @@
-package org.flutterbit.mangopay.demo.mangopay.demo.model;
+package org.flutterbit.mangopay.demo.model;
 
 import io.micronaut.core.annotation.Introspected;
+import io.micronaut.serde.annotation.Serdeable;
 import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
 @Introspected
 @Data
-class Image {
+@Serdeable
+public class Image {
     @Id
     @GeneratedValue
     private Long id;

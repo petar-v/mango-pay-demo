@@ -67,7 +67,7 @@ micronaut {
     testRuntime("junit5")
     processing {
         incremental(true)
-        annotations("org.flutterbit.*")
+        annotations("org.flutterbit.mangopay.demo.*")
     }
     aot {
         // Please review carefully the optimizations enabled below
