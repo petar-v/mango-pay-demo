@@ -26,7 +26,7 @@ public class DataLoader {
     @EventListener
     public void onStartup(ServerStartupEvent event) {
         if (coolUserRepository.count() == 0) {
-            CoolUser user = new CoolUser("Some cool User");
+            CoolUser user = new CoolUser("Some cool User", "user@example.com","password");
             coolUserRepository.save(user);
         }
         if (projectIdeaRepository.count() == 0) {
