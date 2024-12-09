@@ -1,4 +1,4 @@
-package org.flutterbit.mangopay.demo;
+package org.flutterbit.mangopay.demo.controller;
 
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;

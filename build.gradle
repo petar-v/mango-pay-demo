@@ -31,13 +31,26 @@ dependencies {
     implementation("jakarta.validation:jakarta.validation-api")
     compileOnly("io.micronaut.openapi:micronaut-openapi-annotations")
     runtimeOnly("ch.qos.logback:logback-classic")
-    runtimeOnly("com.h2database:h2")
     testImplementation("org.hamcrest:hamcrest")
     testImplementation("org.mockito:mockito-core")
     aotPlugins platform("io.micronaut.platform:micronaut-platform:4.7.1")
     aotPlugins("io.micronaut.security:micronaut-security-aot")
-}
 
+    // lombok
+    implementation "org.projectlombok:lombok:1.18.30"
+    annotationProcessor "org.projectlombok:lombok:1.18.30"
+    testAnnotationProcessor "org.projectlombok:lombok:1.18.30"
+    testImplementation "org.projectlombok:lombok:1.18.30"
+
+    // SQLite and Flyway dependencies
+    implementation("org.xerial:sqlite-jdbc:3.43.2.0")
+    runtimeOnly("org.xerial:sqlite-jdbc:3.43.2.0")
+    implementation("org.hibernate.orm:hibernate-community-dialects:6.2.0.Final")
+
+
+    implementation("org.flywaydb:flyway-core:9.2.3")
+    implementation("io.micronaut.flyway:micronaut-flyway")
+}
 
 application {
     mainClass = "org.flutterbit.Application"
@@ -47,7 +60,6 @@ java {
     targetCompatibility = JavaVersion.toVersion("21")
 }
 
-
 graalvmNative.toolchainDetection = false
 
 micronaut {
@@ -55,7 +67,7 @@ micronaut {
     testRuntime("junit5")
     processing {
         incremental(true)
-        annotations("org.flutterbit.*")
+        annotations("org.flutterbit.mangopay.demo.*")
     }
     aot {
         // Please review carefully the optimizations enabled below
@@ -73,9 +85,6 @@ micronaut {
     }
 }
 
-
 tasks.named("dockerfileNative") {
     jdkVersion = "21"
 }
-
-
