@@ -6,50 +6,83 @@ plugins {
 }
 
 version = "0.1"
-group = "org.flutterbit"
+group = "org.flutterbit.mangopay.demo"
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
+    // Annotation processors for Micronaut framework features
     annotationProcessor("io.micronaut.data:micronaut-data-processor")
     annotationProcessor("io.micronaut:micronaut-http-validation")
     annotationProcessor("io.micronaut.openapi:micronaut-openapi")
     annotationProcessor("io.micronaut.security:micronaut-security-annotations")
     annotationProcessor("io.micronaut.serde:micronaut-serde-processor")
     annotationProcessor("io.micronaut.validation:micronaut-validation-processor")
+
+    // Micronaut HTTP client for making external requests
     implementation("io.micronaut:micronaut-http-client")
     implementation("io.micronaut:micronaut-jackson-databind")
+
+    // Micronaut Data for JPA and Hibernate integration
     implementation("io.micronaut.data:micronaut-data-hibernate-jpa")
+
+    // Micronaut GraphQL for GraphQL API support
     implementation("io.micronaut.graphql:micronaut-graphql")
+
+    // Micronaut Security for authentication and JWT
     implementation("io.micronaut.security:micronaut-security-jwt")
     implementation("io.micronaut.security:micronaut-security-oauth2")
+
+    // Micronaut serialization and deserialization support
     implementation("io.micronaut.serde:micronaut-serde-jackson")
+
+    // Micronaut SQL with Hikari connection pooling
     implementation("io.micronaut.sql:micronaut-jdbc-hikari")
+
+    // Validation APIs for input validation
     implementation("io.micronaut.validation:micronaut-validation")
     implementation("jakarta.validation:jakarta.validation-api")
+
+    // OpenAPI annotations for API documentation
     compileOnly("io.micronaut.openapi:micronaut-openapi-annotations")
+
+    // Runtime dependencies for logging
     runtimeOnly("ch.qos.logback:logback-classic")
+    implementation('commons-logging:commons-logging:1.2')
+
+    // Test dependencies
     testImplementation("org.hamcrest:hamcrest")
     testImplementation("org.mockito:mockito-core")
     aotPlugins platform("io.micronaut.platform:micronaut-platform:4.7.1")
+    implementation("jakarta.inject:jakarta.inject-api:2.0.1")
+
+
+    // Micronaut AOT dependencies for advanced optimizations
+    aotPlugins platform("io.micronaut.platform:micronaut-platform")
     aotPlugins("io.micronaut.security:micronaut-security-aot")
 
-    // lombok
+    // Lombok for reducing boilerplate code
     implementation "org.projectlombok:lombok:1.18.30"
     annotationProcessor "org.projectlombok:lombok:1.18.30"
     testAnnotationProcessor "org.projectlombok:lombok:1.18.30"
     testImplementation "org.projectlombok:lombok:1.18.30"
 
-    // SQLite and Flyway dependencies
+    // SQLite and Flyway for database management
     implementation("org.xerial:sqlite-jdbc:3.43.2.0")
     runtimeOnly("org.xerial:sqlite-jdbc:3.43.2.0")
     implementation("org.hibernate.orm:hibernate-community-dialects:6.2.0.Final")
-
-
     implementation("org.flywaydb:flyway-core:9.2.3")
     implementation("io.micronaut.flyway:micronaut-flyway")
+
+    // Password encoding using BCrypt
+    implementation("io.micronaut.security:micronaut-security")
+    implementation('org.springframework.security:spring-security-crypto:6.3.3')
+
+    // Micronaut Views
+    // Templating engine - Thymeleaf
+    implementation("io.micronaut.views:micronaut-views-thymeleaf")
 }
 
 application {
