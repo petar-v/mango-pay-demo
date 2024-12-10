@@ -1,10 +1,18 @@
 package org.flutterbit.mangopay.demo.service;
 
+import com.nimbusds.jwt.JWTClaimsSet;
+import com.nimbusds.jwt.JWTParser;
+import io.micronaut.security.authentication.AuthenticationException;
 import jakarta.inject.Singleton;
+import jakarta.validation.constraints.NotNull;
+import lombok.extern.slf4j.Slf4j;
 import org.flutterbit.mangopay.demo.model.CoolUser;
 import org.flutterbit.mangopay.demo.repository.CoolUserRepository;
 import org.flutterbit.mangopay.demo.security.PasswordEncoder;
 
+import java.text.ParseException;
+
+@Slf4j
 @Singleton
 public class CoolUserService {
 
@@ -23,6 +31,20 @@ public class CoolUserService {
         user.setEmail(email);
         user.setPassword(hashedPassword);
 
-        return userRepository.save(user);
+        userRepository.save(user);
+        return user;
+    }
+
+    public CoolUser getUserFromToken(@NotNull String authorizationHeader) {
+        String token = authorizationHeader.replace("Bearer ", "");
+        try {
+            JWTClaimsSet claims = JWTParser.parse(token).getJWTClaimsSet();
+            String userId = claims.getStringClaim("sub");
+            log.info("**** USER ID FROM TOKEN: {} ****", userId);
+            return userRepository.findById(Long.valueOf(userId)).orElseThrow(() -> new AuthenticationException("User not found"));
+        } catch (ParseException e) {
+            e.printStackTrace();
+            throw new AuthenticationException("Invalid JWT token");
+        }
     }
 }

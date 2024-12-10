@@ -1,5 +1,6 @@
 package org.flutterbit.mangopay.demo;
 
+import io.micronaut.runtime.event.annotation.EventListener;
 import io.micronaut.runtime.server.event.ServerStartupEvent;
 import jakarta.inject.Singleton;
 import org.flutterbit.mangopay.demo.model.CoolUser;
@@ -22,7 +23,7 @@ public class DataLoader {
         this.coolUserRepository = coolUserRepository;
     }
 
-    // @EventListener
+    @EventListener
     public void onStartup(ServerStartupEvent event) {
         if (coolUserRepository.count() == 0) {
             CoolUser user = new CoolUser("Some cool User", "user@example.com", "password");
