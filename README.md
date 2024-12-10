@@ -101,6 +101,21 @@ To ensure the security of the API, the following measures were considered:
 
 These measures, combined with Micronaut's built-in security features, create a secure foundation for the API.
 
+**Write the Slack Message You Would Send to the Frontend Developer Explaining How to Use the API**
+
+> Hi, frontend dev,
+>
+> I've implemented the backend endpoints for the VeryCool App. You can refer to the README in my PR for details on how
+> to use them: [PR functionality and examples](https://github.com/petar-v/mango-pay-demo/pull/3).
+>
+> If you have any questions or need clarification, feel free to reach out to me. Also, I've published a collection of
+> examples in the Insomnia REST client that you can use to test the API. Let me know if you need access or further
+> guidance.
+>
+> Thanks!
+
+Thanks!
+
 **License**
 
 The Unlicense
