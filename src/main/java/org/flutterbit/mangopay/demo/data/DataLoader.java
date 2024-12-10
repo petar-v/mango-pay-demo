@@ -1,4 +1,4 @@
-package org.flutterbit.mangopay.demo;
+package org.flutterbit.mangopay.demo.data;
 
 import io.micronaut.runtime.event.annotation.EventListener;
 import io.micronaut.runtime.server.event.ServerStartupEvent;

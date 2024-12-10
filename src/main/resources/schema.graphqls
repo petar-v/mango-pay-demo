@@ -1,0 +1,43 @@
+type Query {
+    listIdeas: [IdeaResponse]
+    getIdeaById(id: ID!): DetailedIdeaResponse
+}
+
+type Mutation {
+    createIdea(name: String!, description: String!): ID
+    likeIdea(id: ID!): String
+    dislikeIdea(id: ID!): String
+    addCommentToIdea(id: ID!, text: String!): String
+}
+
+type IdeaResponse {
+    id: ID!
+    name: String!
+    description: String
+    commentCount: Int
+    likeCount: Int
+    author: AuthorResponse
+}
+
+type DetailedIdeaResponse {
+    id: ID!
+    name: String!
+    description: String
+    imageUrl: String
+    author: AuthorResponse
+    likeCount: Int
+    comments: [CommentResponse]
+    isLikedByCurrentUser: Boolean
+}
+
+type AuthorResponse {
+    id: ID!
+    name: String!
+    email: String
+}
+
+type CommentResponse {
+    id: ID!
+    text: String
+    author: AuthorResponse
+}
