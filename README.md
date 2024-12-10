@@ -114,8 +114,6 @@ These measures, combined with Micronaut's built-in security features, create a s
 >
 > Thanks!
 
-Thanks!
-
 **License**
 
 The Unlicense
