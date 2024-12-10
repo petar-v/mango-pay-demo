@@ -77,6 +77,10 @@ dependencies {
     // Password encoding using BCrypt
     implementation("io.micronaut.security:micronaut-security")
     implementation('org.springframework.security:spring-security-crypto:6.3.3')
+
+    // Micronaut Views
+    // Templating engine - Thymeleaf
+    implementation("io.micronaut.views:micronaut-views-thymeleaf")
 }
 
 application {

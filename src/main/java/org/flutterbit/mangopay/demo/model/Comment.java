@@ -11,7 +11,7 @@ import lombok.Data;
 @Serdeable
 public class Comment {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @ManyToOne
