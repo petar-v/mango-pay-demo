@@ -6,6 +6,8 @@ import io.micronaut.http.annotation.*;
 import io.micronaut.security.annotation.Secured;
 import io.micronaut.security.rules.SecurityRule;
 import io.micronaut.serde.annotation.Serdeable;
+import jakarta.inject.Inject;
+import lombok.extern.slf4j.Slf4j;
 import org.flutterbit.mangopay.demo.model.CoolUser;
 import org.flutterbit.mangopay.demo.model.ProjectIdea;
 import org.flutterbit.mangopay.demo.service.CoolUserService;
@@ -27,7 +29,7 @@ record CommentResponse(Long id, String text, AuthorResponse author) {
 @Introspected
 @Serdeable
 record DetailedIdeaResponse(Long id, String name, String description, String imageUrl, AuthorResponse author,
-                            int likeCount, List<CommentResponse> comments) {
+                            int likeCount, List<CommentResponse> comments, boolean isLikedByCurrentUser) {
 }
 
 @Introspected
@@ -40,10 +42,14 @@ record IdeaResponse(Long id, String name, String description, int commentCount, 
 record NewCommentRequest(String text) {
 }
 
+@Slf4j
 @Controller("/ideas")
 public class ProjectIdeaController {
 
+    @Inject
     private final ProjectIdeaService projectIdeaService;
+
+    @Inject
     private final CoolUserService userService;
 
     public ProjectIdeaController(ProjectIdeaService projectIdeaService, CoolUserService userService) {
@@ -70,8 +76,13 @@ public class ProjectIdeaController {
 
     @Get("/{id}")
     @Secured(SecurityRule.IS_ANONYMOUS)
-    public DetailedIdeaResponse getIdeaById(@PathVariable Long id) {
+    public DetailedIdeaResponse getIdeaById(@PathVariable Long id, @Header(value = "Authorization", defaultValue = "") String authorizationHeader) {
         ProjectIdea idea = projectIdeaService.getIdeaById(id);
+        boolean isLikedByCurrentUser = false;
+        if (!authorizationHeader.isBlank()) {
+            CoolUser user = userService.getUserFromToken(authorizationHeader);
+            isLikedByCurrentUser = idea.getLikes().stream().anyMatch(likedUser -> likedUser.getId().equals(user.getId()));
+        }
 
         return new DetailedIdeaResponse(
                 idea.getId(),
@@ -92,7 +103,8 @@ public class ProjectIdeaController {
                                 comment.getAuthor().getName(),
                                 comment.getAuthor().getEmail()
                         )
-                )).collect(Collectors.toList())
+                )).collect(Collectors.toList()),
+                isLikedByCurrentUser
         );
     }
 
