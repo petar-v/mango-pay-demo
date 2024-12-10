@@ -103,4 +103,20 @@ public class ProjectIdeaController {
         projectIdeaService.addCommentToIdea(id, request.text(), user);
         return HttpResponse.ok("Comment added");
     }
+
+    @Post("/{id}/like")
+    @Secured(SecurityRule.IS_AUTHENTICATED)
+    public HttpResponse<String> likeIdea(@PathVariable Long id, @Header("Authorization") String authorizationHeader) {
+        CoolUser user = userService.getUserFromToken(authorizationHeader);
+        projectIdeaService.likeIdea(id, user);
+        return HttpResponse.ok("Article is liked");
+    }
+
+    @Post("/{id}/dislike")
+    @Secured(SecurityRule.IS_AUTHENTICATED)
+    public HttpResponse<String> dislikeIdea(@PathVariable Long id, @Header("Authorization") String authorizationHeader) {
+        CoolUser user = userService.getUserFromToken(authorizationHeader);
+        projectIdeaService.dislikeIdea(id, user);
+        return HttpResponse.ok("Article is disliked");
+    }
 }

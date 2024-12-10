@@ -47,5 +47,20 @@ public class ProjectIdeaService {
         commentRepository.save(comment);
 
         idea.getComments().add(comment);
+        projectIdeaRepository.save(idea);
+    }
+
+    @Transactional
+    public void likeIdea(Long ideaId, CoolUser user) {
+        ProjectIdea idea = getIdeaById(ideaId);
+        idea.getLikes().add(user);
+        projectIdeaRepository.save(idea);
+    }
+
+    @Transactional
+    public void dislikeIdea(Long ideaId, CoolUser user) {
+        ProjectIdea idea = getIdeaById(ideaId);
+        idea.getLikes().remove(user);
+        projectIdeaRepository.save(idea);
     }
 }
