@@ -1,20 +1,122 @@
 **Backend for VeryCool App**
 
-This project is the backend for a platform to store and display ideas. It provides REST/GraphQL APIs to list and add new ideas for the VeryCool application: [https://verycoolapp.com/](https://verycoolapp.com/). The frontend design for this application can be found here: [Figma Design](https://www.figma.com/file/w1flltlnUTjkfiWFyhRnzX/Web-Application-Developer-Technical-Test?type=design&node-id=16%3A2&mode=design&t=3vU9Qf2EZJYZkoOD-1).
+This project is the backend for a platform to store and display ideas. It provides REST/GraphQL APIs to list and add new
+ideas for the VeryCool application: [https://verycoolapp.com/](https://verycoolapp.com/). The frontend design for this
+application can be found
+here: [Figma Design](https://www.figma.com/file/w1flltlnUTjkfiWFyhRnzX/Web-Application-Developer-Technical-Test?type=design\&node-id=16%3A2\&mode=design\&t=3vU9Qf2EZJYZkoOD-1).
 
 **Description**
 
-This project is a REST/GraphQL API for managing and listing project ideas. Users can add, retrieve, and comment on ideas, each of which includes a name, image, author information, comments, and likes. The project aims to implement robust security, easy deployment, and out-of-the-box scalability using modern Java frameworks and technologies.
+This project is a REST/GraphQL API for managing and listing project ideas. Users can add, retrieve, and comment on
+ideas, each of which includes a name, image, author information, comments, and likes. The project aims to implement
+robust security, easy deployment, and out-of-the-box scalability using modern Java frameworks and technologies.
 
 **Chosen Technologies**
 
-- **Micronaut Framework**: A modern Java framework optimized for building lightweight, fast microservices.
-- **SQLite**: A lightweight, file-based relational database chosen for its simplicity and rapid setup. Ideal for development and small-scale use cases. Thanks to **Micronaut Data**, we can easily swap the backend to other databases such as PostgreSQL or MariaDB if needed. Ideal for development and small-scale use cases. A lightweight relational database chosen for its simplicity and compatibility with Docker Compose for rapid setup.
-- **Micronaut Data**: A persistence framework that integrates with various databases like SQLite, PostgreSQL, and others, similar to Hibernate but optimized for Micronaut. It allows easy swapping of the database backend.
-- **Docker Compose**: Used to easily containerize the application and database, ensuring consistent and simple deployment.
-- **Micronaut Security (OAuth + JWT)**: Provides OAuth2 authentication and JWT for secure endpoints, allowing a streamlined security implementation.
-- **GraphQL Module**: Micronaut module that supports GraphQL queries and mutations alongside REST endpoints.
+- **Micronaut Framework**: Micronaut Framework was chosen for its lightweight design, aligning well with MangoPay's tech
+  stack. The same reason why I chose to do this in Java instead of Kotlin or Scala.
+- **SQLite**: A lightweight, file-based relational database chosen for its simplicity and rapid setup. Ideal for
+  development and small-scale use cases. Thanks to **Micronaut Data**, we can easily swap the backend to other databases
+  such as PostgreSQL or MariaDB if needed. Ideal for development and small-scale use cases such as this demo.&#x20;
+- **Micronaut Data**: A persistence framework that integrates with various databases like SQLite, PostgreSQL, and
+  others, similar to Hibernate but optimized for Micronaut. It allows easy swapping of the database backend and
+  integrates with our current stack. For a simple application like this, we don't need to use anything else.
+- **Micronaut Security (OAuth + JWT)**: Provides OAuth2 authentication and JWT for secure endpoints, allowing a
+  streamlined security implementation. Since this is intended for a back-end of a single front-end application, I've
+  implemented only JWT. It can facilitate the login and registration from a web application written in React, for
+  example.
+- **GraphQL Module**: Micronaut module that supports GraphQL queries and mutations alongside REST endpoints. So far,
+  only a simple REST API is implemented. The web application has limited functionalities, requiring only a few
+  endpoints. Using the Micronaut ecosystem ensures easy expansion to a GraphQL API.
+
+**What Database(s) Would You Choose?**
+
+For this project, a SQL database is preferred over NoSQL because the data is very well-structured, consisting of
+predefined entities like users, ideas, comments, and likes. A relational database such as PostgreSQL or MariaDB would
+work well for production use cases, offering robust features, scalability, and strong community support.
+
+Since this is primarily a CRUD application, there’s no need for a complex database setup or advanced NoSQL features.
+Simpler relational databases suffice.
+
+Alternatively, Firebase could be an option for a quick setup in use cases where integration with a CMS or real-time
+database features is beneficial. However, it’s less suited for relational data needs compared to traditional SQL
+databases.
+
+**What Considerations Would You Make When Building the API?**
+
+When designing the API, I considered the following:
+
+- **Use Case**: The API is meant to serve as a backend for a web front-end application. There are no third-party apps in
+  scope, so I chose to use JWT for authentication instead of OAuth, which would be more complex but useful for broader
+  integrations.
+
+- **Endpoints**: The application requires only a few endpoints: adding, deleting, liking, and commenting on ideas,
+  listing ideas, and logging in and registering users. Given this limited functionality, a REST API was chosen for its
+  simplicity and faster time-to-market.
+
+- **Pagination**: While pagination is a common practice for listing endpoints, I decided not to implement it in this
+  demo due to the limited scope of the project. However, Micronaut does support pagination through its Data module and
+  can be added easily in the future.
+
+- **Error Handling and Responses**: The API uses appropriate HTTP status codes to indicate the success or failure of
+  operations (e.g., `200 OK`, `400 Bad Request`, `401 Unauthorized`, `404 Not Found`). Clear and meaningful error
+  messages are returned to the client to ensure better debugging and user experience.
+
+- **Rate Limiting**: To protect the API from abuse, rate limiting could be implemented. Micronaut supports rate limiting
+  through third-party libraries like `Bucket4j` for enforcing quotas and throttling requests efficiently.
+
+- **Swagger/OpenAPI Documentation**: To aid frontend integration and third-party use, API documentation can be generated
+  using Micronaut's OpenAPI module. This ensures that all endpoints, request structures, and response formats are
+  well-documented.
+
+- **Performance and Security**: JWT enables stateless authentication, reducing server overhead. The simplicity of REST
+  ensures efficient and lightweight communication between the frontend and backend.
+
+**How Would You Handle Security of the API?**
+
+To ensure the security of the API, the following measures were considered:
+
+- **JWT Authentication**: Stateless, signed JWT tokens are used for authenticating users. This approach ensures secure
+  and efficient authentication, suitable for single front-end applications.
+
+- **OAuth for Third-Party Integrations**: While not implemented in this project, OAuth mechanisms can be introduced if
+  third-party integrations are required in the future.
+
+- **Rate Limiting**: As mentioned earlier, rate limiting can be implemented using libraries like `Bucket4j` to protect
+  the API from abuse by throttling excessive requests.
+
+- **Validation and Sanitization**: All inputs are validated and sanitized using Micronaut's built-in features to prevent
+  common security vulnerabilities such as SQL Injection and XSS.
+
+- **HTTPS Enforcement**: Ensuring that all communication between the client and server uses HTTPS to protect data in
+  transit.
+
+- **Password Hashing**: User passwords are securely hashed using modern algorithms such as `bcrypt`, ensuring they are
+  never stored in plaintext.
+
+- **Token Refresh**: Implementing token refresh mechanisms to allow longer user sessions without compromising security.
+
+- **CORS**: Configuring Cross-Origin Resource Sharing (CORS) policies to restrict access to the API from only trusted
+  origins.
+
+These measures, combined with Micronaut's built-in security features, create a secure foundation for the API.
+
+**Write the Slack Message You Would Send to the Frontend Developer Explaining How to Use the API**
+
+> Hi, frontend dev,
+>
+> I've implemented the backend endpoints for the VeryCool App. You can refer to the README in my PR for details on how
+> to use them: [PR functionality and examples](https://github.com/petar-v/mango-pay-demo/pull/3).
+>
+> If you have any questions or need clarification, feel free to reach out to me. Also, I've published a collection of
+> examples in the Insomnia REST client that you can use to test the API. Let me know if you need access or further
+> guidance.
+>
+> Thanks!
+
+Thanks!
 
 **License**
 
 The Unlicense
+
