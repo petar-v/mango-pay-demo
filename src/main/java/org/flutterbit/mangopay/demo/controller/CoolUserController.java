@@ -23,6 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.flutterbit.mangopay.demo.model.CoolUser;
 import org.flutterbit.mangopay.demo.repository.CoolUserRepository;
 import org.flutterbit.mangopay.demo.security.PasswordEncoder;
+import org.flutterbit.mangopay.demo.service.CoolUserService;
 import reactor.core.publisher.Mono;
 
 import java.util.Map;
@@ -57,6 +58,9 @@ public class CoolUserController {
     private CoolUserRepository userRepository;
 
     @Inject
+    private CoolUserService userService;
+
+    @Inject
     private PasswordEncoder passwordEncoder;
 
     @Inject
@@ -68,10 +72,8 @@ public class CoolUserController {
         if (userRepository.findByEmail(request.email()).isPresent()) {
             return HttpResponse.badRequest("Email already exists");
         }
-        String encodedPassword = passwordEncoder.encode(request.password());
-        CoolUser user = new CoolUser(request.name(), request.email(), encodedPassword);
+        userService.registerUser(request.name(), request.email(), request.password());
 
-        userRepository.save(user);
         return HttpResponse.ok("User registered successfully");
     }
 
