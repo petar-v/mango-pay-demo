@@ -39,4 +39,9 @@ public class CoolUser {
         this.password = password;
         this.email = email;
     }
+
+    public CoolUser(Long id, String name, String email, String password) {
+        this(name, email, password);
+        this.id = id;
+    }
 }

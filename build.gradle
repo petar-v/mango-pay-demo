@@ -56,6 +56,8 @@ dependencies {
     testImplementation("org.hamcrest:hamcrest")
     testImplementation("org.mockito:mockito-core")
     aotPlugins platform("io.micronaut.platform:micronaut-platform:4.7.1")
+    implementation("jakarta.inject:jakarta.inject-api:2.0.1")
+
 
     // Micronaut AOT dependencies for advanced optimizations
     aotPlugins platform("io.micronaut.platform:micronaut-platform")

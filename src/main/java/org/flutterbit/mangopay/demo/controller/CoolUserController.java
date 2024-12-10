@@ -91,6 +91,7 @@ public class CoolUserController {
     public Mono<HttpResponse<AccessRefreshToken>> login(@Body @Valid LoginRequest request) {
         return Mono.create(emitter -> {
             userRepository.findByEmail(request.getIdentity()).ifPresentOrElse(user -> {
+                log.info("Request secret: {}, User password: {}", request.getSecret(), user.getPassword());
                 if (passwordEncoder.matches(request.getSecret(), user.getPassword())) {
                     Optional<String> tokenOptional = generateJwtToken(user);
 
