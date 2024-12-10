@@ -18,11 +18,6 @@ import java.util.stream.Collectors;
 
 @Introspected
 @Serdeable
-record AuthorResponse(Long id, String name, String email) {
-}
-
-@Introspected
-@Serdeable
 record CommentResponse(Long id, String text, AuthorResponse author) {
 }
 
@@ -30,11 +25,6 @@ record CommentResponse(Long id, String text, AuthorResponse author) {
 @Serdeable
 record DetailedIdeaResponse(Long id, String name, String description, String imageUrl, AuthorResponse author,
                             int likeCount, List<CommentResponse> comments, boolean isLikedByCurrentUser) {
-}
-
-@Introspected
-@Serdeable
-record IdeaResponse(Long id, String name, String description, int commentCount, int likeCount, AuthorResponse author) {
 }
 
 @Introspected
