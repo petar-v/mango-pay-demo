@@ -42,6 +42,11 @@ record IdeaResponse(Long id, String name, String description, int commentCount, 
 record NewCommentRequest(String text) {
 }
 
+@Introspected
+@Serdeable
+record NewIdeaRequest(String name, String description) {
+}
+
 @Slf4j
 @Controller("/ideas")
 public class ProjectIdeaController {
@@ -130,5 +135,21 @@ public class ProjectIdeaController {
         CoolUser user = userService.getUserFromToken(authorizationHeader);
         projectIdeaService.dislikeIdea(id, user);
         return HttpResponse.ok("Article is disliked");
+    }
+
+    @Delete("/{id}")
+    @Secured(SecurityRule.IS_AUTHENTICATED)
+    public HttpResponse<String> deleteIdea(@PathVariable Long id, @Header("Authorization") String authorizationHeader) {
+        CoolUser user = userService.getUserFromToken(authorizationHeader);
+        projectIdeaService.deleteIdea(id, user);
+        return HttpResponse.ok("Idea deleted successfully");
+    }
+
+    @Post
+    @Secured(SecurityRule.IS_AUTHENTICATED)
+    public HttpResponse<Long> createIdea(@Body NewIdeaRequest request, @Header("Authorization") String authorizationHeader) {
+        CoolUser user = userService.getUserFromToken(authorizationHeader);
+        ProjectIdea idea = projectIdeaService.createIdea(request.name(), request.description(), user);
+        return HttpResponse.ok(idea.getId());
     }
 }

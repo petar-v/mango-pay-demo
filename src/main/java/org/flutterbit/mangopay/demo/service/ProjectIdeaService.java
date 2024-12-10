@@ -3,6 +3,7 @@ package org.flutterbit.mangopay.demo.service;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
 import org.flutterbit.mangopay.demo.model.Comment;
 import org.flutterbit.mangopay.demo.model.CoolUser;
 import org.flutterbit.mangopay.demo.model.ProjectIdea;
@@ -11,6 +12,7 @@ import org.flutterbit.mangopay.demo.repository.ProjectIdeaRepository;
 
 import java.util.List;
 
+@Slf4j
 @Singleton
 public class ProjectIdeaService {
 
@@ -62,5 +64,24 @@ public class ProjectIdeaService {
         ProjectIdea idea = getIdeaById(ideaId);
         idea.getLikes().remove(user);
         projectIdeaRepository.save(idea);
+    }
+
+    @Transactional
+    public void deleteIdea(Long ideaId, CoolUser user) {
+        ProjectIdea idea = getIdeaById(ideaId);
+        log.info("Deleting Idea: user ID = {}, author ID = {}", user.getId(), idea.getAuthor().getId());
+        if (!idea.getAuthor().getId().equals(user.getId())) {
+            throw new IllegalArgumentException("You are not authorized to delete this idea");
+        }
+        projectIdeaRepository.delete(idea);
+    }
+
+    @Transactional
+    public ProjectIdea createIdea(String name, String description, CoolUser author) {
+        ProjectIdea idea = new ProjectIdea();
+        idea.setName(name);
+        idea.setDescription(description);
+        idea.setAuthor(author);
+        return projectIdeaRepository.save(idea);
     }
 }
