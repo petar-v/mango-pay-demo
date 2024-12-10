@@ -29,10 +29,12 @@ public class CoolUserControllerTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(CoolUserControllerTest.class);
 
     private static final String TEST_USER_EMAIL = "test@example.com";
-    private static final String TEST_USER_NAME = "Test User";
-    private static final String TEST_USER_PASSWORD = "some-password";
+    private static final String TEST_USER_NAME = "TestUser";
+    private static final String TEST_USER_PASSWORD = "hashedpassword";
     private static final String WRONG_USER_EMAIL = "wrong@example.com";
-    private static final String WRONG_PASSWORD = "wrong-password";
+    private static final String WRONG_PASSWORD = "wrongpassword";
+
+    private CoolUser mockUser;
 
     @Inject
     @Client("/")
@@ -48,12 +50,14 @@ public class CoolUserControllerTest {
     void setup() {
         // Reset the mock repository before each test
         Mockito.reset(userRepository);
+
+        String encodedTestPassword = passwordEncoder.encode(TEST_USER_PASSWORD);
+        mockUser = new CoolUser(123L, TEST_USER_NAME, TEST_USER_EMAIL, encodedTestPassword);
     }
 
     @Test
     void testLoginEndpoint() {
         // Mock repository behavior: user exists
-        CoolUser mockUser = new CoolUser(123L, TEST_USER_NAME, TEST_USER_EMAIL, passwordEncoder.encode(TEST_USER_PASSWORD));
         when(userRepository.findByEmail(TEST_USER_EMAIL)).thenReturn(Optional.of(mockUser));
 
         // Mock request payload
@@ -145,7 +149,6 @@ public class CoolUserControllerTest {
     @Test
     void testLoginWrongPassword() {
         // Mock repository behavior: user exists
-        CoolUser mockUser = new CoolUser(123L, TEST_USER_NAME, TEST_USER_EMAIL, passwordEncoder.encode(TEST_USER_PASSWORD));
         when(userRepository.findByEmail(TEST_USER_EMAIL)).thenReturn(Optional.of(mockUser));
 
         // Mock request payload
@@ -177,7 +180,7 @@ public class CoolUserControllerTest {
     @Test
     void testRegisterDuplicateEmail() {
         // Mock repository behavior: email already exists
-        when(userRepository.findByEmail(TEST_USER_EMAIL)).thenReturn(Optional.of(new CoolUser(123L, TEST_USER_NAME, TEST_USER_EMAIL, TEST_USER_PASSWORD)));
+        when(userRepository.findByEmail(TEST_USER_EMAIL)).thenReturn(Optional.of(mockUser));
 
         // Mock request payload
         String payload = String.format(
