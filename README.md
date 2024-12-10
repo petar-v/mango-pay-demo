@@ -29,6 +29,19 @@ robust security, easy deployment, and out-of-the-box scalability using modern Ja
   only a simple REST API is implemented. The web application has limited functionalities, requiring only a few
   endpoints. Using the Micronaut ecosystem ensures easy expansion to a GraphQL API.
 
+**What Database(s) Would You Choose?**
+
+For this project, a SQL database is preferred over NoSQL because the data is very well-structured, consisting of
+predefined entities like users, ideas, comments, and likes. A relational database such as PostgreSQL or MariaDB would
+work well for production use cases, offering robust features, scalability, and strong community support.
+
+Since this is primarily a CRUD application, there’s no need for a complex database setup or advanced NoSQL features.
+Simpler relational databases suffice.
+
+Alternatively, Firebase could be an option for a quick setup in use cases where integration with a CMS or real-time
+database features is beneficial. However, it’s less suited for relational data needs compared to traditional SQL
+databases.
+
 **License**
 
 The Unlicense
