@@ -72,6 +72,35 @@ When designing the API, I considered the following:
 - **Performance and Security**: JWT enables stateless authentication, reducing server overhead. The simplicity of REST
   ensures efficient and lightweight communication between the frontend and backend.
 
+**How Would You Handle Security of the API?**
+
+To ensure the security of the API, the following measures were considered:
+
+- **JWT Authentication**: Stateless, signed JWT tokens are used for authenticating users. This approach ensures secure
+  and efficient authentication, suitable for single front-end applications.
+
+- **OAuth for Third-Party Integrations**: While not implemented in this project, OAuth mechanisms can be introduced if
+  third-party integrations are required in the future.
+
+- **Rate Limiting**: As mentioned earlier, rate limiting can be implemented using libraries like `Bucket4j` to protect
+  the API from abuse by throttling excessive requests.
+
+- **Validation and Sanitization**: All inputs are validated and sanitized using Micronaut's built-in features to prevent
+  common security vulnerabilities such as SQL Injection and XSS.
+
+- **HTTPS Enforcement**: Ensuring that all communication between the client and server uses HTTPS to protect data in
+  transit.
+
+- **Password Hashing**: User passwords are securely hashed using modern algorithms such as `bcrypt`, ensuring they are
+  never stored in plaintext.
+
+- **Token Refresh**: Implementing token refresh mechanisms to allow longer user sessions without compromising security.
+
+- **CORS**: Configuring Cross-Origin Resource Sharing (CORS) policies to restrict access to the API from only trusted
+  origins.
+
+These measures, combined with Micronaut's built-in security features, create a secure foundation for the API.
+
 **License**
 
 The Unlicense
